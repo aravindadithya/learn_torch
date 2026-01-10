@@ -23,7 +23,7 @@ git config --global --add safe.directory "$REPO_DIR"
 if [ -d "$REPO_DIR/.git" ]; then
     echo "Updating $REPO_NAME ($REPO_BRANCH)..."
     cd "$REPO_DIR" || exit 1
-    GIT_LFS_SKIP_SMUDGE=$SKIP_LFS git pull origin "$REPO_BRANCH"
+    GIT_LFS_SKIP_SMUDGE=$SKIP_LFS git pull
 else
     echo "Cloning $REPO_NAME ($REPO_BRANCH)..."
     cd /work || exit 1

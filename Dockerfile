@@ -5,7 +5,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
     SHELL=/bin/bash
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-pip python3-dev git git-lfs curl iproute2 tini build-essential && \
+    python3-pip python3-dev git git-lfs curl iproute2 tini tmux build-essential && \
+    # Link python to python3 so VS Code kernels don't break
+    ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /work
@@ -21,9 +23,7 @@ done
 
 COPY requirements.txt .
 RUN count=0; while [ $count -lt 5 ]; do \
-    # Install requirements + Jupyter tools for Terminal support
-    pip3 install --no-cache-dir -r requirements.txt jupyterlab visdom terminado && \
-    # CLEANUP: Remove build-tools and caches in the same layer they are finished being used
+    pip3 install --no-cache-dir -r requirements.txt visdom && \
     apt-get purge -y build-essential python3-dev && \
     apt-get autoremove -y && \
     rm -rf /root/.cache/pip && \
@@ -32,11 +32,8 @@ RUN count=0; while [ $count -lt 5 ]; do \
     sleep 5; \
 done
 
-# --- FINAL CONFIGURATION ---
-COPY start.sh /work/start.sh
-RUN chmod +x /work/start.sh
-
 EXPOSE 8097 8888
 
-ENTRYPOINT ["/usr/bin/tini", "--", "/bin/bash", "/work/start.sh"]
-CMD ["learn_torch", "master", "0"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+CMD ["/bin/bash"]
