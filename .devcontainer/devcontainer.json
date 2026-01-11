@@ -1,7 +1,7 @@
 {
     "name": "VastAI-PyTorch-Sync",
     "image": "vastai/pytorch:cuda-12.4.1-auto",
-    "workspaceFolder": "/workspace", // Explicitly sets the root
+    "workspaceFolder": "/workspaces", // Explicitly sets the root
     
     "runArgs": [
         "--gpus", "all",
