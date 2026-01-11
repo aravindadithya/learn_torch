@@ -21,7 +21,7 @@
                 "ms-python.vscode-pylance"
             ],
             "settings": {
-                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "python.defaultInterpreterPath": "/opt/conda/bin/python",
                 // Ensures terminal starts at your code root
                 "terminal.integrated.cwd": "${containerWorkspaceFolder}",
                 // Helps Pylance (IntelliSense) see your modules
